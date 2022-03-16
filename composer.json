@@ -1,7 +1,7 @@
 {
-  "name": "lbigroupp/loggerRealPath",
+  "name": "lbigroupp/logger-real-path",
   "description": "personnal version from apache log4PHP realpath",
-  "homepage": "https://github.com/rvaly/loggerRealPath",
+  "homepage": "https://github.com/rvaly/logger-real-path",
   "type": "library",
   "license": "MIT",
   "autoload": {
