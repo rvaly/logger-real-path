@@ -1,0 +1,7 @@
+.idea
+vendor
+*.cache
+
+# composer.lock should be ignored for library
+# https://getcomposer.org/doc/02-libraries.md#lock-file
+composer.lock

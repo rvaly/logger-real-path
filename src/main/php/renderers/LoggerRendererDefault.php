@@ -7,7 +7,7 @@
  * (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
  *
- *	   http://www.apache.org/licenses/LICENSE-2.0
+ *       http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -20,17 +20,32 @@
 
 /**
  * The default renderer, which is used when no other renderer is found.
- * 
+ *
  * Renders the input using <var>print_r</var>.
  *
- * @package log4php
+ * @package    log4php
  * @subpackage renderers
- * @since 0.3
+ * @since      0.3
  */
-class LoggerRendererDefault implements LoggerRenderer {
 
-	/** @inheritdoc */
-	public function render($input) {
-		return print_r($input, true);
-	}
+use Symfony\Component\VarDumper\Cloner\VarCloner;
+use Symfony\Component\VarDumper\Dumper\CliDumper;
+
+class LoggerRendererDefault implements LoggerRenderer
+{
+    public function render($input): string
+    {
+        $cloner = new VarCloner();
+
+        $output = '';
+        $dumper = new CliDumper(static function ($line, $depth, $indentPad) use (&$output) {
+            if ($depth !== -1) {
+                $output .= str_repeat($indentPad, $depth) . $line . "\n";
+            }
+        });
+
+        $dumper->dump($cloner->cloneVar($input));
+
+        return $output;
+    }
 }
